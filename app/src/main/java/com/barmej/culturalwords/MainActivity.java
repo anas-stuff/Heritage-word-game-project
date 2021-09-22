@@ -1,12 +1,10 @@
 package com.barmej.culturalwords;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         // Set Random image
         setRandomImage();
 
-        // Share button
+        // Share button click listener
+        shareQuestionButton.setOnClickListener(listener -> shareImage());
         
 
     }
@@ -64,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void shareImage() {
         // كود مشاركة الصورة هنا
+        Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+        intent.putExtra(Constants.INDEX_IMAGE_EXTRA, currentIndex); // Send index
+        intent.putExtra(Constants.IMAGE_ID_EXTRA, (int)images.get(currentIndex)); // Send id for image
+        startActivity(intent); // Lunch share activity
     }
 
     /**
