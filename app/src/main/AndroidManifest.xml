@@ -10,6 +10,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".AnswerActivity"
+                android:exported="true" />
+        <activity
                 android:name=".ShareActivity"
                 android:exported="true" />
         <activity android:name=".MainActivity">

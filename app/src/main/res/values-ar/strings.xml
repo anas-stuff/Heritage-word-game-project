@@ -10,7 +10,7 @@
     <string name="permission_explanation">يحتاج التطبيق للحصول على صلاحية الكتابة على وحدة التخزين الخارجية لتخزين الصورة تمهيدا لاتاحة مشاركتها من خلال التطبيقات الأخرى</string>
     <string name="permission_denied">لم يتم تنفيذ العملية بسبب عدم منح الصلاحيات اللازمة لتنفيذها</string>
     <string name="share_title_default">هل يمكنك مساعدتي في تخمين الشيئ الذي تدل عليه هذة الصورة؟</string>
-    <string name="lang_dialog_title">ـغيير اللغة</string>
+    <string name="lang_dialog_title">تغيير اللغة</string>
 
     <string-array name="answers">
         <item>العقال</item>

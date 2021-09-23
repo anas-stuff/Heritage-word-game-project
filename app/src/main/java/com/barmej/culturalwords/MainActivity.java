@@ -1,7 +1,7 @@
 package com.barmej.culturalwords;
 
 import android.Manifest;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,11 +21,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
-    private ImageButton changeQuestionButton, showAnswerButton, shareQuestionButton, changeLangButton;
     private ImageView imageView;
 
     // Get Images
-    private final ArrayList<Integer> images = new ArrayList<Integer>();
+    private final ArrayList<Integer> images = new ArrayList<>();
     int currentIndex = 0;
 
 
@@ -38,18 +37,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Set a primary values
-        shareQuestionButton = findViewById(R.id.button_share_question);
-        changeLangButton = findViewById(R.id.button_change_language);
-        changeQuestionButton = findViewById(R.id.button_change_question);
-        showAnswerButton = findViewById(R.id.button_open_answer);
+        ImageButton shareQuestionButton = findViewById(R.id.button_share_question);
+        ImageButton changeLangButton = findViewById(R.id.button_change_language);
+        ImageButton changeQuestionButton = findViewById(R.id.button_change_question);
+        ImageButton showAnswerButton = findViewById(R.id.button_open_answer);
         imageView = findViewById(R.id.image_view_question);
 
         // Get images
         for(int i = 0; i < getResources().getStringArray(R.array.answers).length; i++)
             images.add(this.getResources().getIdentifier("icon_" + (i + 1), "drawable", this.getPackageName()));
 
-        // Set Random image
-        setRandomImage();
+        // Get index from pref
+        currentIndex = getIndexFromPref();
+        /* Check current index
+        * if current index equal -1 So no value has been saved in the preference
+        * */
+        if(currentIndex != -1) { // get the index value from pref
+            currentIndex = getIndexFromPref();
+            // Remove index from pref
+            removeIndexFromPref();
+        }
+        else  // Set Random image
+            getRandomIndex();
+       // Set image
+        setImageView();
 
         // Share button click listener
         shareQuestionButton.setOnClickListener(listener -> shareImage());
@@ -57,12 +68,24 @@ public class MainActivity extends AppCompatActivity {
         // Change language button click listener
         changeLangButton.setOnClickListener(listener -> changeLang());
         
+        // Show answer button click listener
+        showAnswerButton.setOnClickListener(listener -> goAnswerActivity());
+
+        // Change question button click listener
+        changeQuestionButton.setOnClickListener(listener -> {
+            getRandomIndex();
+            // Set image
+            setImageView();
+        });
 
     }
 
-    private void setRandomImage(){
+    private void getRandomIndex(){
         currentIndex = (int)(Math.random() * images.size()); // Get Random number between 0 and images size - 1
-        // Set image
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void setImageView(){
         imageView.setImageDrawable(getDrawable(images.get(currentIndex)));
     }
 
@@ -81,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                     }
                     saveLangInSharedPref(lang);
+                    saveIndexInPref();
                     LocaleHelper.updateResourcesLegacy(MainActivity.this, lang);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -102,6 +126,31 @@ public class MainActivity extends AppCompatActivity {
         String appLang = sharedPref.getString(Constants.APP_LANG_PREF, "");
         if(appLang != null && !appLang.equals(""))
             LocaleHelper.setLocale(this, appLang);
+    }
+
+    private void saveIndexInPref(){
+        getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE)
+                .edit()
+                .putInt(Constants.INDEX_PREF, currentIndex)
+                .apply();
+    }
+
+    private void removeIndexFromPref(){
+        getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE)
+                .edit()
+                .remove(Constants.INDEX_PREF)
+                .apply();
+    }
+
+    private int getIndexFromPref(){
+        return getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE)
+                .getInt(Constants.INDEX_PREF, -1);
+    }
+
+    private void goAnswerActivity(){
+        Intent intent = new Intent(this, AnswerActivity.class);
+        intent.putExtra(Constants.INDEX_IMAGE_EXTRA, currentIndex);
+        startActivity(intent);
     }
     /**
      * يجب عليك كتابة الكود الذي يقوم بمشاركة الصورة في هذه الدالة
@@ -132,20 +181,14 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(this)
                         .setTitle(R.string.permission_title)
                         .setMessage(R.string.permission_explanation)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // requestPermissions عند الضغط على زر منح نقوم بطلب الصلاحية عن طريق الدالة
-                                ActivityCompat.requestPermissions(MainActivity.this,
-                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                        PERMISSIONS_WRITE_EXTERNAL_STORAGE);
-                            }
-                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //  عند الضغط على زر منع نقوم بإخفاء الرسالة وكأن شيء لم يكن
-                                dialogInterface.dismiss();
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                            // requestPermissions عند الضغط على زر منح نقوم بطلب الصلاحية عن طريق الدالة
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                    PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+                        }).setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
+                            //  عند الضغط على زر منع نقوم بإخفاء الرسالة وكأن شيء لم يكن
+                            dialogInterface.dismiss();
                         }).create();
 
                 // نقوم بإظهار الرسالة بعد إنشاء alertDialog
