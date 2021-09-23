@@ -1,45 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">traditional words</string>
+    <string name="share_the_question_with_friends">Ask a friend</string>
+    <string name="share_question_text">Share</string>
+    <string name="share_title_hint">Add a title</string>
+    <string name="the_right_answer_is">The answer is</string>
+    <string name="back_text">Return</string>
+    <string name="permission_title">clarification</string>
+    <string name="permission_explanation">The application needs to obtain write permission to the external storage to store the image in preparation for sharing it through other applications</string>
+    <string name="permission_denied">The operation was not executed because the necessary permissions to perform it were not granted</string>
+    <string name="share_title_default">Can you help me guess what this picture indicates?</string>
+    <string name="lang_dialog_title">Change language</string>
 
-    <string name="app_name">كلمات تراثية</string>
-    <string name="share_the_question_with_friends">اسأل صديق</string>
-    <string name="share_question_text">شارك</string>
-    <string name="share_title_hint">أضف عنوان</string>
-    <string name="the_right_answer_is">الإجابة هي</string>
-    <string name="back_text">رجوع</string>
-    <string name="permission_title">توضيح</string>
-    <string name="permission_explanation">يحتاج التطبيق للحصول على صلاحية الكتابة على وحدة التخزين الخارجية لتخزين الصورة تمهيدا لاتاحة مشاركتها من خلال التطبيقات الأخرى</string>
-    <string name="permission_denied">لم يتم تنفيذ العملية بسبب عدم منح الصلاحيات اللازمة لتنفيذها</string>
+    <string-array name="languages">
+        <item>العربية</item>
+        <item>English</item>
+    </string-array>
 
     <string-array name="answers">
-        <item>العقال</item>
-        <item>الفروة</item>
-        <item>السدو</item>
-        <item>الحناء</item>
-        <item>الدلة</item>
-        <item>الخف</item>
-        <item>الخنجر</item>
-        <item>النمرقة</item>
-        <item>القنديل / السراج</item>
-        <item>الفانوس</item>
-        <item>الطربوش</item>
-        <item>العمامة</item>
-        <item>الدشداشة</item>
+        <item>the agal</item>
+        <item>scalp</item>
+        <item>Sadu</item>
+        <item>henna</item>
+        <item>dallah</item>
+        <item>slippers</item>
+        <item>dagger</item>
+        <item>the tiger</item>
+        <item>The lamp</item>
+        <item>lantern</item>
+        <item>fez</item>
+        <item>turban</item>
+        <item>dishdasha</item>
     </string-array>
 
     <string-array name="answer_description">
-        <item>يوضع فوق الحطّة\الغترة لتثبيتها</item>
-        <item>مبطنة بالصوف، تلبس في الشتاء للوقاية من البرد</item>
-        <item>أحد أنواع النسيج البدوي التقليدي</item>
-        <item>تستخدم في صبغ الشعر واللحية، كما تستخدم أيضاً في تجميل الأيدي بالنسبة للنساء</item>
-        <item>الوعاء المستخدم في تقديم القهوة عند العرب</item>
-        <item>مصنوع من الجلد، يُلبس في القدم، اشتُهر قديماً عند العرب</item>
-        <item>سلاح أبيض صغير يوضع على الخصر</item>
-        <item>وسادة صغيرة يُتكأ عليها</item>
-        <item>اسم الاداة التي كانت تُستخدم للإضاءة قديما</item>
-        <item>أداة تُستخدم للإضاءة والزينة</item>
-        <item>قبعة حمراء اشتهرت في بلاد الشام ومصر والمغرب</item>
-        <item>غطاء يُكوّر فوق الرأس</item>
-        <item>ثوب عربي يُلبس بكثرة في دول الخليج</item>
+        <item>It is placed over the station / ghutra to fix it</item>
+        <item>Fleece lined, worn in winter to prevent cold</item>
+        <item>A type of traditional Bedouin weaving</item>
+        <item>It is used to dye hair and beard, and it is also used to beautify hands for women</item>
+        <item>The vessel used for serving coffee among Arabs</item>
+        <item>Made of leather, worn on the foot, it was famous in the old days of the Arabs</item>
+        <item>Small white weapon placed on the waist</item>
+        <item>Small pillow to recline on</item>
+        <item>The name of the instrument that was used for lighting in the past</item>
+        <item>A tool used for lighting and decoration</item>
+        <item>A red hat was popular in the Levant, Egypt and Morocco</item>
+        <item>Roll-over cap</item>
+        <item>An Arab dress that is widely worn in the Gulf countries</item>
     </string-array>
 
 </resources>

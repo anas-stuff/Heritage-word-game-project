@@ -3,6 +3,7 @@ package com.barmej.culturalwords;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get saved lang
+        getAppLangFromPref();
+
         setContentView(R.layout.activity_main);
 
         // Set a primary values
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         // Share button click listener
         shareQuestionButton.setOnClickListener(listener -> shareImage());
         
+        // Change language button click listener
+        changeLangButton.setOnClickListener(listener -> changeLang());
+        
 
     }
 
@@ -57,6 +64,44 @@ public class MainActivity extends AppCompatActivity {
         currentIndex = (int)(Math.random() * images.size()); // Get Random number between 0 and images size - 1
         // Set image
         imageView.setImageDrawable(getDrawable(images.get(currentIndex)));
+    }
+
+    private void changeLang(){
+        // Show lang dialog
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.lang_dialog_title)
+                .setItems(R.array.languages, (dialogInterface, which) -> {
+                    String lang = "ar";
+                    switch(which){
+                        case 0:
+                            lang = "ar";
+                            break;
+                        case 1:
+                            lang = "en";
+                            break;
+                    }
+                    saveLangInSharedPref(lang);
+                    LocaleHelper.updateResourcesLegacy(MainActivity.this, lang);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }).create();
+        alertDialog.show(); // Show dialog
+    }
+
+    private void saveLangInSharedPref(String lang){
+        SharedPreferences sharedPref = getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Constants.APP_LANG_PREF, lang);
+        editor.apply();
+    }
+
+    private void getAppLangFromPref(){
+        SharedPreferences sharedPref = getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE);
+        String appLang = sharedPref.getString(Constants.APP_LANG_PREF, "");
+        if(appLang != null && !appLang.equals(""))
+            LocaleHelper.setLocale(this, appLang);
     }
     /**
      * يجب عليك كتابة الكود الذي يقوم بمشاركة الصورة في هذه الدالة

@@ -1,0 +1,47 @@
+<resources>
+
+    <string name="app_name">كلمات تراثية</string>
+    <string name="share_the_question_with_friends">اسأل صديق</string>
+    <string name="share_question_text">شارك</string>
+    <string name="share_title_hint">أضف عنوان</string>
+    <string name="the_right_answer_is">الإجابة هي</string>
+    <string name="back_text">رجوع</string>
+    <string name="permission_title">توضيح</string>
+    <string name="permission_explanation">يحتاج التطبيق للحصول على صلاحية الكتابة على وحدة التخزين الخارجية لتخزين الصورة تمهيدا لاتاحة مشاركتها من خلال التطبيقات الأخرى</string>
+    <string name="permission_denied">لم يتم تنفيذ العملية بسبب عدم منح الصلاحيات اللازمة لتنفيذها</string>
+    <string name="share_title_default">هل يمكنك مساعدتي في تخمين الشيئ الذي تدل عليه هذة الصورة؟</string>
+    <string name="lang_dialog_title">ـغيير اللغة</string>
+
+    <string-array name="answers">
+        <item>العقال</item>
+        <item>الفروة</item>
+        <item>السدو</item>
+        <item>الحناء</item>
+        <item>الدلة</item>
+        <item>الخف</item>
+        <item>الخنجر</item>
+        <item>النمرقة</item>
+        <item>القنديل / السراج</item>
+        <item>الفانوس</item>
+        <item>الطربوش</item>
+        <item>العمامة</item>
+        <item>الدشداشة</item>
+    </string-array>
+
+    <string-array name="answer_description">
+        <item>يوضع فوق الحطّة\الغترة لتثبيتها</item>
+        <item>مبطنة بالصوف، تلبس في الشتاء للوقاية من البرد</item>
+        <item>أحد أنواع النسيج البدوي التقليدي</item>
+        <item>تستخدم في صبغ الشعر واللحية، كما تستخدم أيضاً في تجميل الأيدي بالنسبة للنساء</item>
+        <item>الوعاء المستخدم في تقديم القهوة عند العرب</item>
+        <item>مصنوع من الجلد، يُلبس في القدم، اشتُهر قديماً عند العرب</item>
+        <item>سلاح أبيض صغير يوضع على الخصر</item>
+        <item>وسادة صغيرة يُتكأ عليها</item>
+        <item>اسم الاداة التي كانت تُستخدم للإضاءة قديما</item>
+        <item>أداة تُستخدم للإضاءة والزينة</item>
+        <item>قبعة حمراء اشتهرت في بلاد الشام ومصر والمغرب</item>
+        <item>غطاء يُكوّر فوق الرأس</item>
+        <item>ثوب عربي يُلبس بكثرة في دول الخليج</item>
+    </string-array>
+
+</resources>
