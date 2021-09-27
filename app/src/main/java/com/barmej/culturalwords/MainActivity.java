@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
             setImageView();
         });
 
-        System.out.println("Call 1");
-
     }
 
     private void getRandomIndex(){
