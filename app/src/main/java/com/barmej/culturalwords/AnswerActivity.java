@@ -1,5 +1,6 @@
 package com.barmej.culturalwords;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,6 +18,13 @@ public class AnswerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set lang
+        /*
+        ملحوظة هنا بعيد ضبط اللغة لان عند دوران الجهاز اللغة تعود للغة الجهاز الافتراضية
+         */
+        Functions.getAndSetLang(this);
+
         setContentView(R.layout.activity_answer);
 
         textView = findViewById(R.id.text_view_answer);
@@ -49,5 +57,4 @@ public class AnswerActivity extends AppCompatActivity {
     private void returnToMainActivity(){
         startActivity(new Intent(this, MainActivity.class));
     }
-
 }

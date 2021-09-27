@@ -15,25 +15,24 @@ import android.widget.TextView;
 public class ShareActivity extends AppCompatActivity {
 
     private TextView shareTitleTextEdit;
-    private ImageView imageView;
-    private Button shareButton;
 
-    private int mImageId, currentIndex;
-    private String mShareTextTitle;
+    private int mImageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set lang
+        Functions.getAndSetLang(this);
+
         setContentView(R.layout.activity_share);
 
         shareTitleTextEdit = findViewById(R.id.edit_text_share_title);
-        shareButton = findViewById(R.id.button_share_question);
-        imageView = findViewById(R.id.image_view_question);
+        Button shareButton = findViewById(R.id.button_share_question);
+        ImageView imageView = findViewById(R.id.image_view_question);
 
         // Get image id from intent
         mImageId = getIntent().getIntExtra(Constants.IMAGE_ID_EXTRA, R.drawable.icon_1);
-        // Get index from intent
-        currentIndex = getIntent().getIntExtra(Constants.INDEX_IMAGE_EXTRA, 0);
 
         // Set image view
         imageView.setImageDrawable(ContextCompat.getDrawable(this, mImageId));
@@ -45,11 +44,12 @@ public class ShareActivity extends AppCompatActivity {
 
     private void share(){
         // Get Share title
-        mShareTextTitle = shareTitleTextEdit.getText().toString();
+        String mShareTextTitle = shareTitleTextEdit.getText().toString();
         if(mShareTextTitle.equals(""))
             mShareTextTitle = getResources().getString(R.string.share_title_default);
 
 
+        //share image
         int resourceId = mImageId;
         Resources resources = getResources();
         Uri imageUri = new Uri.Builder()
@@ -58,8 +58,7 @@ public class ShareActivity extends AppCompatActivity {
                 .appendPath(resources.getResourceTypeName(resourceId))
                 .appendPath(resources.getResourceEntryName(resourceId))
                 .build();
-        //share image
-//        Uri imgUri = Uri.parse("android.resource://" + this.getClass().getPackage() + "/drawable/" + mImageId);
+
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("image/*");

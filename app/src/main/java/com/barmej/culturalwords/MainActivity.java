@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get saved lang
-        getAppLangFromPref();
+        Functions.getAndSetLang(this);
 
         setContentView(R.layout.activity_main);
 
@@ -78,10 +78,15 @@ public class MainActivity extends AppCompatActivity {
             setImageView();
         });
 
+        System.out.println("Call 1");
+
     }
 
     private void getRandomIndex(){
-        currentIndex = (int)(Math.random() * images.size()); // Get Random number between 0 and images size - 1
+        int currentIndex = this.currentIndex;
+        while(currentIndex == this.currentIndex)
+            currentIndex = (int)(Math.random() * images.size()); // Get Random number between 0 and images size - 1
+        this.currentIndex = currentIndex;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -121,13 +126,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void getAppLangFromPref(){
-        SharedPreferences sharedPref = getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE);
-        String appLang = sharedPref.getString(Constants.APP_LANG_PREF, "");
-        if(appLang != null && !appLang.equals(""))
-            LocaleHelper.setLocale(this, appLang);
-    }
-
     private void saveIndexInPref(){
         getSharedPreferences(Constants.APP_PREF, MODE_PRIVATE)
                 .edit()
@@ -161,6 +159,22 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Constants.INDEX_IMAGE_EXTRA, currentIndex); // Send index
         intent.putExtra(Constants.IMAGE_ID_EXTRA, (int)images.get(currentIndex)); // Send id for image
         startActivity(intent); // Lunch share activity
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.INDEX_BUNDLE, currentIndex);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Get Current index
+        currentIndex = savedInstanceState.getInt(Constants.INDEX_BUNDLE, -1);
+        // Set
+        setImageView();
     }
 
     /**
