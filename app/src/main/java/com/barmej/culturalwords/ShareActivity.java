@@ -3,7 +3,9 @@ package com.barmej.culturalwords;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -47,12 +49,21 @@ public class ShareActivity extends AppCompatActivity {
         if(mShareTextTitle.equals(""))
             mShareTextTitle = getResources().getString(R.string.share_title_default);
 
+
+        int resourceId = mImageId;
+        Resources resources = getResources();
+        Uri imageUri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(resourceId))
+                .appendPath(resources.getResourceTypeName(resourceId))
+                .appendPath(resources.getResourceEntryName(resourceId))
+                .build();
         //share image
-        Uri imgUri = Uri.parse("android.resource://" + this.getClass().getPackage() + "/drawable/icon_" + (currentIndex + 1) + ".png");
+//        Uri imgUri = Uri.parse("android.resource://" + this.getClass().getPackage() + "/drawable/" + mImageId);
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("image/*");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, imgUri);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
         shareIntent.putExtra(Intent.EXTRA_TEXT, mShareTextTitle);
         startActivity(Intent.createChooser(shareIntent, "Share question use"));
     }
